@@ -107,6 +107,7 @@ This project is part of a larger effort to demonstrate real-world DevOps skills 
 - Infrastructure design on Proxmox
 - Container orchestration basics
 - CI/CD mindset applied to YAML-based workflows
->>>>>>> 30058a1 (First setup)
+
+
 # home-automation-devops
 Modular home automation setup using Home Assistant, Docker, and LXC on Proxmox with DevOps principles

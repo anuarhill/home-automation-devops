@@ -54,6 +54,40 @@ bash install_mqtt_docker.sh
 
 ---
 
+## 🤝 Integration: Home Assistant + MQTT
+
+Once the MQTT broker is running:
+
+1. **Get the container's IP address**:
+   ```bash
+   ip a
+   ```
+   (Look under `eth0`, e.g., `192.168.1.123`)
+
+2. **Enable MQTT integration in Home Assistant**:
+   - Go to **Settings > Devices & Services > Add Integration**
+   - Select **MQTT**
+   - Enter the following:
+     - **Host:** `192.168.1.123`
+     - **Port:** `1883`
+     - **Username:** `mqttuser`
+     - **Password:** `mqttpassword`
+
+3. **(Optional)**: Add manually in `configuration.yaml`:
+   ```yaml
+   mqtt:
+     broker: 192.168.1.123
+     port: 1883
+     username: mqttuser
+     password: mqttpassword
+   ```
+
+4. **Restart Home Assistant** and confirm connectivity.
+
+---
+
+
+
 ## 🧠 DevOps Principle: Containerized Service
 
 This setup follows DevOps principles:
