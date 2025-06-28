@@ -2,7 +2,7 @@
 name: Simulated HA Install
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   deploy:
@@ -16,4 +16,4 @@ jobs:
         run: |
           echo "🚧 Simulating HA install script (no Docker in GitHub CI)"
           bash lxc-setup/install_ha_docker.sh || echo "Script partially run for simulation."
-
+        shell: bash
