@@ -25,13 +25,31 @@ This project showcases a modular, containerized home automation platform built o
 
 ```
 home-automation-devops/
-├── lxc-setup/                 # Setup Home Assistant container inside LXC
-├── infrastructure/           # IaC - LXC provisioning (Proxmox)
-├── modules/                  # Optional integrations: MQTT, Frigate, AI, etc.
-├── docs/                     # Architecture and documentation
-├── .github/workflows/        # CI/CD with GitHub Actions
-└── README.md                 # You are here
+├── lxc-setup/                        # Setup scripts for Home Assistant in LXC
+├── infrastructure/                  # Infrastructure as Code (Proxmox LXC provisioning)
+│   └── proxmox/
+│       ├── create_lxc_ha_base.sh    # Creates HA LXC container
+│       ├── create_mqtt_lxc.sh       # Creates MQTT LXC container
+│       └── README.md                # Instructions for provisioning with pct
+├── modules/                         # Optional integrations
+│   └── mqtt/
+│       ├── install_mqtt_docker.sh   # Installs Mosquitto via Docker + Samba setup
+│       └── README.md                # Setup documentation for MQTT container
+├── docs/                            # Architecture and design documentation
+├── .github/workflows/               # GitHub Actions workflows (CI/CD)
+└── README.md                        # Project overview (you are here)
+
 ```
+
+## 📁 Folder Breakdown
+
+- `lxc-setup/` – Setup scripts for bootstrapping Home Assistant in an LXC container.
+- `infrastructure/proxmox/` – Scripts to provision unprivileged Debian LXC containers via `pct` (for Home Assistant and MQTT).
+- `modules/mqtt/` – Installs Mosquitto MQTT broker in Docker, with ACL-secured Samba config sharing.
+- `docs/` – System design, architecture diagrams, integration notes.
+- `.github/workflows/` – GitHub Actions for CI/CD automation (e.g., YAML lint).
+- `README.md` – High-level overview and instructions.
+
 
 ---
 
