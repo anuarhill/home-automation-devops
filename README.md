@@ -86,10 +86,11 @@ bash lxc-setup/install_ha_docker.sh
 
 ## 🔧 Coming Soon
 
-- [ ] `modules/mqtt` – Mosquitto container + HA integration
+- [x] `modules/mqtt` – Mosquitto container + HA integration
 - [ ] `modules/frigate` – Local NVR with camera stream detection
 - [ ] `modules/ai-facial-recognition` – Face detection & automation
 - [ ] Monitoring & alerting via Grafana + Prometheus
+
 
 ---
 
