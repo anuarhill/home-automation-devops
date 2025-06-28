@@ -15,5 +15,5 @@ jobs:
       - name: Simulate HA install script
         run: |
           echo "🚧 Simulating HA install script (no Docker in GitHub CI)"
-          bash lxc-setup/install_ha_docker.sh || echo "Script partially run for simulation."
+#          bash lxc-setup/install_ha_docker.sh || echo "Script partially run for simulation."
         shell: bash
