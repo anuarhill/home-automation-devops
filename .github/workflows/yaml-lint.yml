@@ -1,3 +1,5 @@
+---
+
 name: Lint YAML files
 
 on: [push, pull_request]
