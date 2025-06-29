@@ -1,7 +1,5 @@
-
 ![CI](https://github.com/anuarhill/home-automation-devops/actions/workflows/yaml-lint.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 
 # 🏡 Home Automation DevOps
 
@@ -14,9 +12,10 @@ This project showcases a modular, containerized home automation platform built o
 ## 📦 Project Overview
 
 - 🧱 **Infrastructure**: Lightweight LXC containers on Proxmox, provisioned via shell scripts (IaC)
-- 🐳 **Containers**: Home Assistant (base), with modular support for MQTT, Frigate NVR, AI face recognition
+- 🐳 **Containers**: Home Assistant (base), MQTT, Frigate NVR, AI face recognition, Prometheus + Grafana
 - 📁 **Config Management**: Config folder mapped with proper ACL and exposed via SMB share for remote editing
 - 🚀 **CI/CD**: GitHub Actions to lint YAML configurations and simulate deployment pipelines
+- 📊 **Monitoring**: Prometheus + Grafana integrated for observability, with alerting options
 - 🔌 **Modularity**: Easily add services as standalone modules in `/modules/`
 
 ---
@@ -25,72 +24,101 @@ This project showcases a modular, containerized home automation platform built o
 
 ```
 home-automation-devops/
-├── lxc-setup/                        # Setup scripts for Home Assistant in LXC
-├── infrastructure/                  # Infrastructure as Code (Proxmox LXC provisioning)
+├── lxc-setup/
+│   ├── install_ha_docker.sh
+│   └── README.md
+├── infrastructure/
 │   └── proxmox/
-│       ├── create_lxc_ha_base.sh    # Creates HA LXC container
-│       ├── create_mqtt_lxc.sh       # Creates MQTT LXC container
-│       └── README.md                # Instructions for provisioning with pct
-├── modules/                         # Optional integrations
-│   └── mqtt/
-│       ├── install_mqtt_docker.sh   # Installs Mosquitto via Docker + Samba setup
-│       └── README.md                # Setup documentation for MQTT container
-├── docs/                            # Architecture and design documentation
-├── .github/workflows/               # GitHub Actions workflows (CI/CD)
-└── README.md                        # Project overview (you are here)
-
+│       ├── create_lxc_ha_base.sh
+│       ├── create_lxc_mqtt.sh
+│       ├── create_lxc_frigate.sh
+│       ├── create_lxc_monitoring.sh
+│       └── README_proxmox.md
+├── modules/
+│   ├── mqtt/
+│   │   ├── install_mqtt_docker.sh
+│   │   └── README.md
+│   ├── frigate/
+│   │   ├── install_frigate_docker.sh
+│   │   └── README.md
+│   ├── ai-facial-recognition/
+│   │   ├── install_faceai_docker.sh
+│   │   └── README.md
+│   └── monitoring/
+│       ├── install_monitoring_stack.sh
+│       └── README.md
+├── docs/
+│   ├── architecture.md
+│   └── integrations.md
+├── .github/workflows/
+│   └── yaml-lint.yml
+└── README.md
 ```
 
 ## 📁 Folder Breakdown
 
 - `lxc-setup/` – Setup scripts for bootstrapping Home Assistant in an LXC container.
-- `infrastructure/proxmox/` – Scripts to provision unprivileged Debian LXC containers via `pct` (for Home Assistant and MQTT).
-- `modules/mqtt/` – Installs Mosquitto MQTT broker in Docker, with ACL-secured Samba config sharing.
-- `docs/` – System design, architecture diagrams, integration notes.
-- `.github/workflows/` – GitHub Actions for CI/CD automation (e.g., YAML lint).
-- `README.md` – High-level overview and instructions.
-
+- `infrastructure/proxmox/` – Scripts to provision unprivileged Debian LXC containers via `pct`.
+- `modules/mqtt/` – Installs Mosquitto MQTT broker in Docker.
+- `modules/frigate/` – NVR using Frigate for object and motion detection.
+- `modules/ai-facial-recognition/` – AI-based face recognition pipeline for automation triggers.
+- `modules/monitoring/` – Prometheus + Grafana setup for metrics + dashboards.
+- `docs/` – System design, architecture diagrams, and integration notes.
+- `.github/workflows/` – GitHub Actions for CI/CD automation.
+- `README.md` – Project overview.
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Provision the LXC container (Proxmox Host)
+### 1. Provision LXC containers on Proxmox
 ```bash
 bash infrastructure/proxmox/create_lxc_ha_base.sh
+bash infrastructure/proxmox/create_mqtt_lxc.sh
+bash infrastructure/proxmox/create_frigate_lxc.sh
+bash infrastructure/proxmox/create_monitoring_stack.sh
 ```
 
-### 2. Enter the LXC and install Home Assistant
+### 2. Install service stacks inside each LXC
 ```bash
+# Inside each LXC
 bash lxc-setup/install_ha_docker.sh
+bash modules/mqtt/install_mqtt_docker.sh
+bash modules/frigate/install_frigate_docker.sh
+bash modules/monitoring/install_monitoring_stack.sh
+bash modules/ai-facial-recognition/install_faceai_docker.sh
 ```
 
 ### 3. Access Home Assistant
 - URL: `http://<container-ip>:8123`
-- Config folder: exposed via SMB at `\\<container-ip>\hassconfig`
-- Username/password: `smbuser / smbuser`
+- Config folder: `\<container-ip>\hassconfig`
+- SMB Login: `smbuser / smbuser`
+
+### 4. Access Grafana Dashboard
+- URL: `http://<monitoring-ip>:3000`
+- Login: `admin / admin` (change after login)
 
 ---
 
 ## 🧠 DevOps Concepts Demonstrated
 
-| Concept           | Implementation                          |
-|------------------|------------------------------------------|
-| IaC              | Shell scripts to provision LXC + Docker  |
-| Containerization | Dockerized services with mounted config  |
-| Config Mgmt      | ACL + SMB for remote YAML editing        |
-| CI/CD            | GitHub Actions for lint + deploy         |
-| Modularity       | `/modules/` folder for service extensions|
+| Concept           | Implementation                                   |
+|------------------|---------------------------------------------------|
+| IaC              | LXC provisioning scripts (Proxmox)                |
+| Containerization | Dockerized HA + MQTT + Frigate + Monitoring stack |
+| Config Mgmt      | ACL-secured Samba shares for YAML editing         |
+| CI/CD            | YAML linting with GitHub Actions                  |
+| Observability    | Prometheus Node Exporter + Grafana Dashboards     |
+| Modularity       | `/modules/` for plug-and-play integrations        |
 
 ---
 
-## 🔧 Coming Soon
+## ✅ Completed Modules
 
 - [x] `modules/mqtt` – Mosquitto container + HA integration
 - [ ] `modules/frigate` – Local NVR with camera stream detection
 - [ ] `modules/ai-facial-recognition` – Face detection & automation
-- [ ] Monitoring & alerting via Grafana + Prometheus
-
+- [x] `modules/monitoring` – Grafana + Prometheus + alerting
 
 ---
 
@@ -107,7 +135,4 @@ This project is part of a larger effort to demonstrate real-world DevOps skills 
 - Infrastructure design on Proxmox
 - Container orchestration basics
 - CI/CD mindset applied to YAML-based workflows
-
-
-# home-automation-devops
-Modular home automation setup using Home Assistant, Docker, and LXC on Proxmox with DevOps principles
+- Observability and monitoring integration
