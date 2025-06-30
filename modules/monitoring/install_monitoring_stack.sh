@@ -23,9 +23,9 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'node'
+  - job_name: "node_exporter"
     static_configs:
-      - targets: ['host.docker.internal:9100']
+      - targets: ["node_exporter:9100"]
 EOF
 
 echo "🧾 Creating Docker Compose file..."
@@ -49,6 +49,12 @@ services:
       - "3000:3000"
     restart: unless-stopped
 
+  node_exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+
 volumes:
   grafana-storage:
 EOF
@@ -58,3 +64,4 @@ cd /opt/monitoring
 docker-compose up -d
 
 echo "✅ Monitoring stack installed. Access Grafana at http://<LXC-IP>:3000 (login: admin / admin)"
+echo "📊 Prometheus is available at http://<LXC-IP>:9090"
