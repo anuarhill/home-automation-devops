@@ -18,5 +18,6 @@ scrape_configs:
         labels:
           instance: 'home_assistant'
     authorization:
-      credentials: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI5Yjc5N2E0MmE4ODc0MTQxYTM4YmY1ZTA5MjA2OTJjMyIsImlhdCI6MTc1MTI4NzIxNiwiZXhwIjoyMDY2NjQ3MjE2fQ.k3cXG5P9DffNaDJcoRVayCNoTooh4NPPvnTPQE0Snyk'
-        
+      credentials: |
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI5Yjc5N2E0MmE4ODc0MTQxYTM4YmY1ZTA5MjA2OTJjMyIsImlhdCI6MTc1MTI4NzIxNiwiZXhwIjoyMDY2NjQ3MjE2fQ.k3cXG5P9DffNaDJcoRVayCNoTooh4NPPvnTPQE0Snyk
+      
