@@ -27,7 +27,7 @@ This project showcases a modular, containerized home automation platform built o
 home-automation-devops/
 ├── lxc-setup/
 │   ├── install_ha_docker.sh
-│   └── README.md
+│   └── README_lxc-setup.md
 ├── infrastructure/
 │   └── proxmox/
 │       ├── create_lxc_ha_base.sh
