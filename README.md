@@ -17,6 +17,7 @@ This project showcases a modular, containerized home automation platform built o
 - 🚀 **CI/CD**: GitHub Actions to lint YAML configurations and simulate deployment pipelines
 - 📊 **Monitoring**: Prometheus + Grafana integrated for observability, with alerting options
 - 🔌 **Modularity**: Easily add services as standalone modules in `/modules/`
+- 🌐 **Remote Access**: Secure access via NGINX Proxy Manager, Cloudflare, and Dynamic DNS
 
 ---
 
@@ -36,17 +37,11 @@ home-automation-devops/
 │       └── README_proxmox.md
 ├── modules/
 │   ├── mqtt/
-│   │   ├── install_mqtt_docker.sh
-│   │   └── README.md
 │   ├── frigate/
-│   │   ├── install_frigate_docker.sh
-│   │   └── README.md
 │   ├── ai-facial-recognition/
-│   │   ├── install_faceai_docker.sh
-│   │   └── README.md
-│   └── monitoring/
-│       ├── install_monitoring_stack.sh
-│       └── README.md
+│   ├── monitoring/
+├── remote-access/
+│   └── README.md
 ├── docs/
 │   ├── architecture.md
 │   └── integrations.md
@@ -63,6 +58,7 @@ home-automation-devops/
 - `modules/frigate/` – NVR using Frigate for object and motion detection.
 - `modules/ai-facial-recognition/` – AI-based face recognition pipeline for automation triggers.
 - `modules/monitoring/` – Prometheus + Grafana setup for metrics + dashboards.
+- `remote-access/` – Reverse proxy setup (NGINX Proxy Manager + Cloudflare DDNS).
 - `docs/` – System design, architecture diagrams, and integration notes.
 - `.github/workflows/` – GitHub Actions for CI/CD automation.
 - `README.md` – Project overview.
@@ -89,14 +85,10 @@ bash modules/monitoring/install_monitoring_stack.sh
 bash modules/ai-facial-recognition/install_faceai_docker.sh
 ```
 
-### 3. Access Home Assistant
-- URL: `http://<container-ip>:8123`
-- Config folder: `\<container-ip>\hassconfig`
-- SMB Login: `smbuser / smbuser`
-
-### 4. Access Grafana Dashboard
-- URL: `http://<monitoring-ip>:3000`
-- Login: `admin / admin` (change after login)
+### 3. Access Services
+- Home Assistant: `http://<container-ip>:8123`
+- Config folder: `\<container-ip>\hassconfig` (via SMB)
+- Grafana: `http://<monitoring-ip>:3000` (login: `admin / admin`)
 
 ---
 
@@ -110,15 +102,17 @@ bash modules/ai-facial-recognition/install_faceai_docker.sh
 | CI/CD            | YAML linting with GitHub Actions                  |
 | Observability    | Prometheus Node Exporter + Grafana Dashboards     |
 | Modularity       | `/modules/` for plug-and-play integrations        |
+| Secure Access    | Reverse proxy + Cloudflare DDNS + HTTPS (Let's Encrypt) |
 
 ---
 
 ## ✅ Completed Modules
 
 - [x] `modules/mqtt` – Mosquitto container + HA integration
+- [x] `modules/monitoring` – Grafana + Prometheus + alerting
 - [ ] `modules/frigate` – Local NVR with camera stream detection
 - [ ] `modules/ai-facial-recognition` – Face detection & automation
-- [x] `modules/monitoring` – Grafana + Prometheus + alerting
+- [x] `remote-access/` – Remote access using Cloudflare + NGINX Proxy Manager
 
 ---
 
@@ -136,3 +130,4 @@ This project is part of a larger effort to demonstrate real-world DevOps skills 
 - Container orchestration basics
 - CI/CD mindset applied to YAML-based workflows
 - Observability and monitoring integration
+- Securing smart home access from the cloud
