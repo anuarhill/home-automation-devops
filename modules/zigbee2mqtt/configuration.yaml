@@ -1,0 +1,33 @@
+---
+#GNU nano 7.2                                                          configuration.yaml                                                                    
+
+#This configuration is for a Zigbee2MQTT setup with MQTT broker LAN connected. 
+
+version: 4
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://192.168.1.21:1883
+  user: mqttuser
+  password: mqttpassword
+
+serial:
+  port: tcp://192.168.1.23:6638
+  baudrate: 115200
+  adapter: ezsp
+# Disable green led?
+  disable_led: false
+  
+
+frontend:
+  enabled: true
+  port: 8080
+homeassistant:
+  enabled: true
+onboarding: false
+
+advanced:
+  log_level: info
+  network_key: GENERATE
+  pan_id: 0x1A63
+  channel: 11
+  transmit_power: 20
