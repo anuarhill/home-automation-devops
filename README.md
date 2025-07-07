@@ -1,3 +1,4 @@
+
 ![CI](https://github.com/anuarhill/home-automation-devops/actions/workflows/yaml-lint.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -56,7 +57,7 @@ home-automation-devops/
 - `infrastructure/proxmox/` – Scripts to provision unprivileged Debian LXC containers via `pct`.
 - `modules/mqtt/` – Installs Mosquitto MQTT broker in Docker.
 - `modules/frigate/` – NVR using Frigate for object and motion detection.
-- `modules/ai-facial-recognition/` – AI-based face recognition pipeline for automation triggers.
+- `modules/ai-facial-recognition/` – AI face recognition pipeline using Double-Take + DeepStack.
 - `modules/monitoring/` – Prometheus + Grafana setup for metrics + dashboards.
 - `remote-access/` – Reverse proxy setup (NGINX Proxy Manager + Cloudflare DDNS).
 - `docs/` – System design, architecture diagrams, and integration notes.
@@ -110,8 +111,8 @@ bash modules/ai-facial-recognition/install_faceai_docker.sh
 
 - [x] `modules/mqtt` – Mosquitto container + HA integration
 - [x] `modules/monitoring` – Grafana + Prometheus + alerting
-- [ ] `modules/frigate` – Local NVR with camera stream detection
-- [ ] `modules/ai-facial-recognition` – Face detection & automation
+- [x ] `modules/frigate` – Local NVR with camera stream detection
+- [x] `modules/ai-facial-recognition` – Face detection using DeepStack + Double-Take
 - [x] `remote-access/` – Remote access using Cloudflare + NGINX Proxy Manager
 
 ---

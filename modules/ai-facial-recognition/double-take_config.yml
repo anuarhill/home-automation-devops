@@ -1,0 +1,30 @@
+---
+# Double Take Configuration
+# 📘 Learn more: https://github.com/skrashevich/double-take/#configuration
+
+# 🧠 Face Detection Matching Rules
+detect:
+  match:
+    save: true                  # Save matched face images
+    base64: false               # Include base64 in results (true, false, or 'box')
+    confidence: 60              # Confidence threshold for matches
+    purge: 168                  # Auto-delete match images after hours
+    min_area: 10000             # Minimum face area (px) to count as valid
+
+  unknown:
+    save: true                  # Save unknown face images
+    base64: false               # Include base64 in results (true, false, or 'box')
+    confidence: 40              # Confidence threshold for unknowns
+    purge: 8                    # Auto-delete unknown images after hours
+    min_area: 0                 # Minimum face area (px) to keep
+
+# 🔍 Detector Configuration
+detectors:
+  deepstack:
+    url: http://192.168.1.27:5000
+#   key:                       # Optional API key if needed
+    timeout: 15                # Timeout in seconds for detection request
+    opencv_face_required: false  # Require OpenCV to detect face before processing
+#   cameras:                   # Optional: restrict processing to specific cameras
+#     - front-door
+#     - garage
